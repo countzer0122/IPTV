@@ -1,36 +1,53 @@
-# [Project name]
+# IPTV Stream
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A full-featured IPTV client app built with Expo (React Native) for Android, iOS, and Android TV. Connects to any Xtream Codes compatible server.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/iptv-app run dev` — run the Expo dev server
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: Expo SDK 54, React Native 0.81, Expo Router (file-based routing)
+- State: React Context + AsyncStorage (no backend required for IPTV functionality)
+- API: Direct Xtream Codes API calls from the app (no proxy needed)
+- Video: react-native-webview with HLS.js for stream playback
+- UI: Custom dark streaming theme (indigo/purple accent)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/iptv-app/` — the Expo app
+- `artifacts/iptv-app/app/` — all screens (expo-router file-based routing)
+- `artifacts/iptv-app/services/xtream.ts` — Xtream Codes API service (singleton)
+- `artifacts/iptv-app/context/AuthContext.tsx` — login state & credentials
+- `artifacts/iptv-app/context/AppContext.tsx` — favorites & watch history
+- `artifacts/iptv-app/types/xtream.ts` — all Xtream API types
+- `artifacts/iptv-app/constants/colors.ts` — dark streaming palette
+
+## Screens
+
+- `/login` — server URL, username, password; validates before saving
+- `/home` — main hub with Live TV, Movies, Series, Search, Favorites, Settings
+- `/live` — live TV with category filter, channel list, EPG
+- `/movies` — movie grid with category filter and search
+- `/series` — series grid with category filter and search
+- `/movie-detail` — movie info, plot, cast, play + favorite
+- `/series-detail` — seasons, episode list, play individual episodes
+- `/search` — cross-content search (live, movies, series)
+- `/favorites` — favorited channels/movies/series
+- `/settings` — account info, history, disconnect
+- `/player` — full-screen video player (HLS/MPEG-TS/DASH via WebView+HLS.js)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
+- No backend needed: all Xtream API calls go directly from the app to the user's server
+- Credentials stored in AsyncStorage (cleared on logout)
+- Singleton `xtreamService` holds the current session credentials
+- Dark mode forced via `userInterfaceStyle: "dark"` in app.json
+- WebView player with HLS.js handles HLS streams universally in Expo Go
 
 ## User preferences
 
@@ -38,8 +55,6 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- The xtreamService singleton must have credentials set before any API call; the AuthContext handles this on app start
+- react-native-webview version pinned to 13.17.0 (SDK 54 expects 13.15.0 but 13.17.0 works)
+- Scan the QR code from the Replit URL bar to test on a physical device via Expo Go
