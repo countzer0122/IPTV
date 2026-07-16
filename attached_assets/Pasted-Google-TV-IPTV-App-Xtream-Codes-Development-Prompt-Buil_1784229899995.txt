@@ -1,0 +1,245 @@
+Google TV IPTV App (Xtream Codes) – Development Prompt
+
+Build a native Android TV / Google TV IPTV application using Kotlin.
+
+Tech Stack
+Kotlin
+Jetpack Compose for TV (preferred)
+Android Media3 ExoPlayer
+Retrofit + OkHttp
+Kotlin Coroutines
+Room Database
+Coil for images
+Material 3 for TV
+MVVM Architecture⁹
+Repository Pattern
+Hilt Dependency Injection
+Project Structure
+
+Organize the project into:
+
+authentication
+home
+live_tv
+movies
+series
+epg
+player
+search
+favorites
+settings
+data
+network
+models
+database
+ui
+utils
+
+Use clean architecture and separate UI, ViewModels, repositories, and networking.
+
+Login Screen
+
+Allow the user to enter:
+
+Server URL
+Username
+Password
+
+Store credentials securely using EncryptedSharedPreferences.
+
+Validate the connection before saving.
+
+Xtream API Support
+
+Create a Retrofit service that communicates with the user's configured Xtream-compatible server.
+
+Implement support for:
+
+Live TV categories
+Live streams
+Movie categories
+Movies
+Series categories
+Series
+Series episodes
+EPG
+Stream information
+
+Use Kotlin data classes for all API responses.
+
+Home Screen
+
+Display cards for:
+
+Live TV
+Movies
+Series
+Search
+Favorites
+Settings
+
+Design specifically for TV screens.
+
+Live TV
+
+Display:
+
+Categories
+Stream list
+Logos
+Current programme
+Next programme
+
+Support:
+
+Search
+Favorites
+Recently watched
+Video Player
+
+Use Media3 ExoPlayer.
+
+Support:
+
+HLS
+MPEG-TS
+DASH
+
+Include:
+
+Play/Pause
+Seek (where applicable)
+Channel Up/Down
+Previous channel
+Audio track selection
+Subtitle selection
+Playback error handling
+Movies
+
+Display:
+
+Posters
+Categories
+Description
+Runtime
+Rating
+Cast
+Genre
+
+Allow adding to Favorites.
+
+Series
+
+Display:
+
+Seasons
+Episodes
+Episode descriptions
+Artwork
+Continue watching
+EPG
+
+Implement:
+
+Timeline
+Current programme
+Next programme
+Programme descriptions
+
+Cache EPG locally.
+
+Search
+
+Search across:
+
+Live TV
+Movies
+Series
+
+Display results grouped by content type.
+
+Database
+
+Use Room for:
+
+Favorites
+Recently watched
+Continue watching
+Cached EPG
+Settings
+
+Include:
+
+Theme
+Clear cache
+Refresh content
+Player settings
+About
+App version
+TV Navigation
+
+Optimize for Google TV remote:
+
+DPAD navigation
+Focus animations
+Large touch targets
+Smooth scrolling
+
+No touchscreen assumptions.
+
+Error Handling
+
+Handle:
+
+Invalid credentials
+Network timeouts
+Empty categories
+Missing images
+Playback failures
+Lost connection
+
+Display user-friendly messages.
+
+UI
+
+Use a modern streaming-service style interface with:
+
+Dark theme
+Rounded cards
+Large posters
+Smooth animations
+Fast loading
+Lazy loading
+Image caching
+
+The interface should feel polished and optimized for a 10-foot TV experience.
+
+Code Quality
+MVVM
+SOLID principles
+Clean Architecture
+Modular code
+Comprehensive comments
+No duplicated code
+Null safety
+Proper loading states
+Unit-testable repositories
+Deliverables
+
+Generate a complete Android Studio project that builds successfully.
+
+Implement the application incrementally:
+
+Create the project structure.
+Implement login.
+Connect to the user's Xtream-compatible server.
+Display live TV categories.
+Implement video playback.
+Add movies.
+Add series.
+Add EPG.
+Add search.
+Add favorites.
+Polish the UI.
+Optimize performance.
+Prepare the app for release with proper code organization and documentation.
