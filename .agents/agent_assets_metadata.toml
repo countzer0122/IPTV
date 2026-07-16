@@ -5,4 +5,4 @@ generated = []
 id = "Hdgn-T8BUGqomzi4CuG8A"
 uri = "file://iptv-app.zip"
 type = "unspecified"
-title = "iptv-app (EAS build ready)"
+title = "iptv-app (standalone, no pnpm needed)"
