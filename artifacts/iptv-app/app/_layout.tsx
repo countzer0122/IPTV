@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -15,6 +16,18 @@ import * as SplashScreen from 'expo-splash-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/context/AuthContext';
 import { AppProvider } from '@/context/AppContext';
+
+// react-native-google-cast requires a native build — safe-import so Expo Go
+// still loads without crashing.
+let CastProvider: React.ComponentType<{ children: React.ReactNode }> = ({ children }) => <>{children}</>;
+if (Platform.OS !== 'web') {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    CastProvider = require('react-native-google-cast').CastProvider;
+  } catch {
+    // Expo Go — casting disabled
+  }
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,15 +80,17 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
-        <AuthProvider>
-          <AppProvider>
-            <QueryClientProvider client={queryClient}>
-              <GestureHandlerRootView style={{ flex: 1 }}>
-                <RootLayoutNav />
-              </GestureHandlerRootView>
-            </QueryClientProvider>
-          </AppProvider>
-        </AuthProvider>
+        <CastProvider>
+          <AuthProvider>
+            <AppProvider>
+              <QueryClientProvider client={queryClient}>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                  <RootLayoutNav />
+                </GestureHandlerRootView>
+              </QueryClientProvider>
+            </AppProvider>
+          </AuthProvider>
+        </CastProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   );

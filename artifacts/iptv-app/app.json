@@ -34,7 +34,15 @@
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "react-native-google-cast",
+        {
+          "androidReceiverAppId": "CC1AD845",
+          "iosReceiverAppId": "CC1AD845",
+          "iOSExpandedControls": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
